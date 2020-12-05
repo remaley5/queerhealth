@@ -43,9 +43,9 @@ const Nav = () => {
                 <button onClick={logoutUser} className='nav-link'>Logout</button>
                 :
                 <>
-                    <div className='landing__btns'>
-                        <button className='login__btn landing__btn' onClick={handleLoginOpen}>Sign in</button>
-                        <button className='login__btn landing__btn' onClick={handleSignupOpen}>Sign up</button>
+                    <div>
+                        <button className='nav-link' onClick={handleLoginOpen}>Sign in</button>
+                        <button className='nav-link' onClick={handleSignupOpen}>Sign up</button>
                     </div>
                     <dialog className='landing__dialog page-mask' open={loginOpen}>
                         <Login setLoginOpen={setLoginOpen} />

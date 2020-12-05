@@ -5,7 +5,7 @@ import { useHistory, NavLink } from 'react-router-dom';
 
 const SearchBar = () => {
     let history = useHistory();
-    const [input, setInput] = useState('healthcare worker')
+    const [input, setInput] = useState('')
 
     const handleChange = e => {
         setInput(e.target.value)
@@ -19,7 +19,7 @@ const SearchBar = () => {
     return (
         <div className='search__component'>
             <input type='text' className='search__value' value={input} onChange={handleChange} />
-            <button className='search__label' className='search__button nav-link' onClick={handleSubmit}>search</button>
+            <button className='search__label' className='search__button nav-link' placeholder='healthcare worker' onClick={handleSubmit}>search</button>
         </div>
     )
 }

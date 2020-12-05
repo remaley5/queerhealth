@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Switch, useLocation } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import { AuthContext } from './context';
 import { ProtectedRoute, AuthRoute } from './Routes'
-import Landing from './components/Landing'
-import Home from './components/Home'
-import Signup from './components/auth/Signup'
+import LandingPage from './components/LandingPage'
+import HomePage from './components/HomePage'
 import Nav from './components/Nav'
+import SearchPage from './components/SearchPage'
+import ProfilePage from './components/ProfilePage'
+import DiscoverPage from './components/DiscoverPage';
 
 const App = () => {
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
@@ -63,21 +65,33 @@ const App = () => {
             <Switch >
                 <AuthRoute
                     path='/landing'
-                    component={Landing}
-                    currentUserId={currentUserId}
-                />
-                <AuthRoute
-                    path="/Signup"
-                    component={Signup}
+                    component={LandingPage}
                     currentUserId={currentUserId}
                 />
                 <ProtectedRoute
                     path="/"
                     exact
-                    component={Home}
+                    component={HomePage}
                     currentUserId={currentUserId}
                 />
-
+                <ProtectedRoute
+                    path="/search"
+                    exact
+                    component={SearchPage}
+                    currentUserId={currentUserId}
+                />
+                <ProtectedRoute
+                    path="/profile"
+                    exact
+                    component={ProfilePage}
+                    currentUserId={currentUserId}
+                />
+                <ProtectedRoute
+                    path="/discover"
+                    exact
+                    component={DiscoverPage}
+                    currentUserId={currentUserId}
+                />
             </Switch>
         </AuthContext.Provider>
     )

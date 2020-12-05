@@ -69,7 +69,7 @@ const Login = ({ setLoginOpen }) => {
                     <div className='auth__form'>
                         <label className='form-label' htmlFor="email">Email</label>
                         <input
-                            className='auth__text'
+                            className='auth__input'
                             id="email"
                             type="email"
                             placeholder="Email"
@@ -77,7 +77,7 @@ const Login = ({ setLoginOpen }) => {
                         />
                         <label className='form-label' htmlFor="password">Password</label>
                         <input
-                            className='auth__text'
+                            className='auth__input'
                             id="password"
                             type="password"
                             placeholder="Password"

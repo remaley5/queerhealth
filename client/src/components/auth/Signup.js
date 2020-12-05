@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
-import {AuthContext} from '../../context';
+import { AuthContext } from '../../context';
 import { useHistory, NavLink } from 'react-router-dom';
 
 
 
-function Signup(props) {
+function Signup({setSignupOpen}) {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
   let [firstName, setFirstName] = useState('');
   let [lastName, setLastName] = useState('');
-	let errors = useState([]);
-	const setErrors = errors[1]
+  let errors = useState([]);
+  const setErrors = errors[1]
   const { fetchWithCSRF, setCurrentUserId } = useContext(AuthContext);
   let history = useHistory();
 
@@ -63,44 +63,52 @@ function Signup(props) {
     signupUser();
   }
 
+  const handleClose = () => {
+    setSignupOpen(false)
+  }
+
   return (
-    <div className='sign-up-page'>
-      <div className='sign-up'>
-        <h1 className='sign-in__title'>Welcome! Who are you?</h1>
-        <form className='sign-form'>
-          <label className='form-label' htmlFor="email">Email</label>
-          <input
-            id='email'
-            type='email'
-            className='sign-in__text'
-            onChange={handleChange}
-          />
-          <label className='form-label' htmlFor="password">Password</label>
-          <input
-            id='password'
-            type='password'
-            className='sign-in__text'
-            onChange={handleChange}
-          />
-          <label className='form-label' htmlFor="firstName">First Name</label>
-          <input
-            id='firstName'
-            type='text'
-            className='sign-in__text'
-            onChange={handleChange}
-          />
-          <label className='form-label' htmlFor="lastName">Last Name</label>
-          <input
-            id='lastName'
-            type='text'
-            className='sign-in__text'
-            onChange={handleChange}
-          />
-          <div className='sign-form-btns'>
-            <button onClick={handleSignUp} className='sign-form-btn left'>Sign Up</button>
-            <NavLink className='sign-form-btn right' to="/landing">Login Instead</NavLink>
-          </div>
-        </form>
+    <div className='auth__con'>
+      <div className='auth__dialog'>
+        <div>
+          <button onClick={handleClose} className='exit-sign'>x</button>
+          <h1 className='auth__title'>
+            Welcome! Who are you?
+              </h1>
+          <form className='auth__form'>
+            <label className='form-label' htmlFor="email">Email</label>
+            <input
+              id='email'
+              type='email'
+              className='auth__input'
+              onChange={handleChange}
+            />
+            <label className='form-label' htmlFor="password">Password</label>
+            <input
+              id='password'
+              type='password'
+              className='auth__input'
+              onChange={handleChange}
+            />
+            <label className='form-label' htmlFor="firstName">First Name</label>
+            <input
+              id='firstName'
+              type='text'
+              className='auth__input'
+              onChange={handleChange}
+            />
+            <label className='form-label' htmlFor="lastName">Last Name</label>
+            <input
+              id='lastName'
+              type='text'
+              className='auth__input'
+              onChange={handleChange}
+            />
+            <div className='auth_btns'>
+              <button onClick={handleSignUp} className='auth__btn left'>Sign Up</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
