@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 
 const Nav = () => {
-    const { setCurrentUserId, currentUserId, fetchWithCSRF } = useContext(AuthContext);
+    const { setCurrentUserId, fetchWithCSRF } = useContext(AuthContext);
     const logoutUser = async () => {
         const response = await fetchWithCSRF('/logout', {
             method: 'POST',
@@ -16,9 +16,9 @@ const Nav = () => {
     }
 
     return (
-        <div className='nav-text'>
-            <NavLink to='/'><button className='nav-link home-link'>home</button></NavLink>
-            <button onClick={logoutUser} className='nav-link logout-link'>Logout</button>
+        <div className='nav-bar'>
+            <NavLink to='/'><button className='nav-link'>home</button></NavLink>
+            <button onClick={logoutUser} className='nav-link'>Logout</button>
         </div>
     )
 }

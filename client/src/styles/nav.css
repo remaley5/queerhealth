@@ -1,0 +1,21 @@
+.nav-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-bottom: 1px solid rgb(228, 204, 228);
+}
+
+.nav-link {
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 20px;
+    background: none;
+    border: 1px solid lightblue;
+    color: rgb(90, 90, 90);
+}
+
+.nav-link:hover {
+    color: black;
+    background-color: rgb(233, 233, 233);
+}

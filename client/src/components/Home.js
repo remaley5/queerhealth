@@ -5,14 +5,13 @@ import { AuthContext } from '../context'
 
 
 const Home = () => {
-    const { fetchWithCSRF, currentUserId } = useContext(AuthContext);
 
     return (
         <div className='page'>
             <div className='page-header'>
                 <div></div>
                 <div className='nav'>
-                    <>Hello</>
+                    <Nav />
                 </div>
             </div>
         </div>
