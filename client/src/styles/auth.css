@@ -1,0 +1,84 @@
+.auth__con {
+  margin-top: 200px;
+}
+
+.auth__dialog {
+  width: 500px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  box-shadow: 0 0 30px rgb(54, 54, 54);
+  display: flex;
+  flex-direction: column;
+  margin-top: 200px;
+  gap: 20px;
+}
+
+.auth__title {
+    padding-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.auth__errors {
+  color: rgb(167, 92, 92);
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.auth__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-label {
+    color: gray;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.auth__text {
+    border: 1px solid gray;
+    font-size: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.auth__btns {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+button.auth__btn {
+  font-size: 25px;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  color: gray;
+  border: 1px solid gray;
+  padding: 20px 40px;
+  text-decoration: none;
+}
+
+.auth__btn:hover {
+    background-color: rgb(73, 73, 73);
+    color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px gray;
+}
+
+
+  .exit-sign {
+    width: fit-content;
+    border: 1px solid gray;
+    background-color: white;
+    color:gray;
+    font-size: 20px;
+    padding: 2px 9px;
+    float: right;
+  }
+
+  .exit-sign:hover {
+    color: white;
+    background-color: rgb(73, 73, 73);
+  }

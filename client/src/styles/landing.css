@@ -1,0 +1,11 @@
+.landing {
+    background-color: rgb(245, 242, 238);
+    width: 100%;
+    height: 100%;
+}
+
+.landing__body {
+    width: 50%;
+    margin: auto;
+    padding-top: 90px;
+}

@@ -1,0 +1,20 @@
+.search__component {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+/* .search__label {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: gray;
+} */
+
+.search__value {
+    height: 35px;
+    text-transform: lowercase;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    padding: 0px 20px;
+}

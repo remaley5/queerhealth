@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Switch, useLocation } from 'react-router-dom';
 
-import { AuthContext} from './context';
+import { AuthContext } from './context';
 import { ProtectedRoute, AuthRoute } from './Routes'
 import Landing from './components/Landing'
 import Home from './components/Home'
 import Signup from './components/auth/Signup'
+import Nav from './components/Nav'
 
 const App = () => {
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
@@ -56,21 +57,28 @@ const App = () => {
 
     return (
         <AuthContext.Provider value={authContextValue}>
-                <Switch >
-                    <AuthRoute path='/landing' component={Landing} />
-                    <AuthRoute
-                        path="/Signup"
-                        component={Signup}
-                        currentUserId={currentUserId}
-                    />
-                    <ProtectedRoute
-                        path="/"
-                        exact
-                        component={Home}
-                        currentUserId={currentUserId}
-                    />
+            <div className='nav' currentUserId={currentUserId}>
+                <Nav />
+            </div>
+            <Switch >
+                <AuthRoute
+                    path='/landing'
+                    component={Landing}
+                    currentUserId={currentUserId}
+                />
+                <AuthRoute
+                    path="/Signup"
+                    component={Signup}
+                    currentUserId={currentUserId}
+                />
+                <ProtectedRoute
+                    path="/"
+                    exact
+                    component={Home}
+                    currentUserId={currentUserId}
+                />
 
-                </Switch>
+            </Switch>
         </AuthContext.Provider>
     )
 }
