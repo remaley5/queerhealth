@@ -13,7 +13,6 @@ const Landing = () => {
     return (
         <div className='landing'>
             <div className='landing__body'>
-                <div className='landing__title'>boards</div>
                 <div className='landing__btns'>
                     <button className='login__btn landing__btn' onClick={handleOpen}>Sign in</button>
                 <NavLink
