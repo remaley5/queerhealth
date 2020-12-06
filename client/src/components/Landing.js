@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useHistory, NavLink } from 'react-router-dom';
-import {AuthContext} from '../context';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import Login from './auth/Login'
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Switch, useLocation } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import { AuthContext} from './context';
 import { ProtectedRoute, AuthRoute } from './Routes'

@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import Nav from './Nav'
-import { AuthContext } from '../context'
 
 
 
