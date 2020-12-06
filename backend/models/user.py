@@ -4,6 +4,36 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
+class State(db.Model):
+    __tablename__ = 'states'
+
+    id = db.Column(db.Integer, primary_key=True)
+    state = db.Column(db.String(30), nullable=False, unique=True)
+
+    health_providers = db.relationship("Health_Provider", back_populates="state")
+    user = db.relationship("User", back_populates="state")
+
+
+class City(db.Model):
+    __tablename__ = 'cities'
+
+    id = db.Column(db.Integer, primary_key=True)
+    city = db.Column(db.String(40), nullable=False, unique=True)
+
+    health_providers = db.relationship("Health_Provider", back_populates="city")
+    user = db.relationship("User", back_populates="city")
+
+
+class Zip_Code(db.Model):
+    __tablename__ = 'zip_codes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    zip_code = db.Column(db.Integer, nullable=False, unique=True)
+
+    health_providers = db.relationship("Health_Provider", back_populates="zip_code")
+    user = db.relationship("User", back_populates="zip_code")
+
+
 class Gender(db.Model):
     __tablename__ = 'gender'
 
@@ -11,6 +41,7 @@ class Gender(db.Model):
     gender = db.Column(db.String(20), nullable=False)
 
     user = db.relationship("User", back_populates="gender")
+
 
 class Race(db.Model):
     __tablename__ = 'race'
@@ -27,19 +58,57 @@ class Sexuality(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sexuality = db.Column(db.String(20), nullable=False)
 
-    relationship_preference = db.relationship("Relationship_Preference", back_populates="sexuality")
+    relationship_pref = db.relationship("Realtionship_Preference", back_populates="sexuality")
     user = db.relationship("User", back_populates="sexuality")
 
 
-class Realtionship_Preference(db.Model):
-    __tablename__ = 'relationship_preference'
+class Specialties(db.Model):
+    __tablename__ = "specialties"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
+    specialty = db.Column(db.String(100), nullable=False)
 
-    user = db.relationship("User", back_populates="relationship_preference")
-    sexuality =  db.relationship("Sexuality", back_populates="relationship_preference")
+    provider_specialties = db.relationship("Provider_Specialties", back_populates="specialty")
+
+
+class Service(db.Model):
+    __tablename__ = "services"
+
+    id = db.Column(db.Integer, primary_key=True)
+    service = db.Column(db.String(100), nullable=False)
+
+    provider_services = db.relationship("Provider_Services", back_populates="services")
+
+class Healthcare_Title(db.Model):
+    __tablename__ = 'health_title'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+
+    health_provider = db.relationship("Health_Provider", back_populates="title")
+
+
+class Health_Provider(db.Model):
+    __tablename__ = 'health_providers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(40), nullable=False)
+    last_name = db.Column(db.String(40), nullable=True)
+    state_id = db.Column(db.Integer, db.ForeignKey('states.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=False)
+    zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'), nullable=False)
+    title_id = db.Column(db.Integer, db.ForeignKey('health_title.id'), nullable=False)
+
+    state = db.relationship("State", back_populates="health_providers")
+    city = db.relationship("City", back_populates="health_providers")
+    zip_code = db.relationship("Zip_Code", back_populates="health_providers")
+    title = db.relationship("Healthcare_Title", back_populates="health_provider")
+    reviews = db.relationship("Review", back_populates="health_provider")
+    services = db.relationship("Provider_Services", back_populates="health_provider")
+    specialties = db.relationship("Provider_Specialties", back_populates="health_provider")
+
+    user_provider = db.relationship("User_Provider", back_populates="health_provider")
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -56,12 +125,12 @@ class User(db.Model, UserMixin):
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'))
 
-    relationship_preference = db.relationship("Relationship_Preference", back_populates="user")
-    sexuality = db.relationship("Sexuality", back_populates="user")
-    race = db.relationship("Race", back_populates="user")
-    gender = db.relationship("Gender", back_populates="user")
-    user_provider = db.relationship("User_Provider", back_populates="user")
-    state = db.relationship("State", back_populates="user")
+    relationship_pref = db.relationship("Realtionship_Preference", back_populates="user", cascade="all, delete")
+    sexuality = db.relationship("Sexuality", back_populates="user", cascade="all, delete")
+    race = db.relationship("Race", back_populates="user", cascade="all, delete")
+    gender = db.relationship("Gender", back_populates="user", cascade="all, delete")
+    user_provider = db.relationship("User_Provider", back_populates="user", cascade="all, delete")
+    state = db.relationship("State", back_populates="user", cascade="all, delete")
     city = db.relationship("City", back_populates="user")
     zip_code = db.relationship("Zip_Code", back_populates="user")
 
@@ -82,66 +151,15 @@ class User(db.Model, UserMixin):
         return check_password_hash(user.password_digest, password), user
 
 
-class Healthcare_Title(db.Model):
-    __tablename__ = 'health_title'
+class Realtionship_Preference(db.Model):
+    __tablename__ = 'relationship_preferences'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
 
-    health_provider = db.relationship("Health_Provider", back_populates="title")
-
-
-class State(db.Model):
-    __tablename__ = 'states'
-
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(30), nullable=False, unique=True)
-
-    health_provider = db.relationship("Health_Provider", back_populates="state")
-    user = db.relationship("User", back_populates="state")
-
-
-class City(db.Model):
-    __tablename__ = 'cities'
-
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(40), nullable=False, unique=True)
-
-    health_provider = db.relationship("Health_Provider", back_populates="city")
-    user = db.relationship("User", back_populates="city")
-
-
-class Zip_Code(db.Model):
-    __tablename__ = 'zip_codes'
-
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.Integer, nullable=False, unique=True)
-
-    health_provider = db.relationship("Health_Provider", back_populates="zip_code")
-    user = db.relationship("User", back_populates="zip_code")
-
-
-class Health_Provider(db.Model):
-    __tablename__ = 'health_providers'
-
-    id = db.Column(db.Integer, primary_key=True)
-    title_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
-    first_name = db.Column(db.String(40), nullable=False)
-    last_name = db.Column(db.String(40), nullable=True)
-    state_id = db.Column(db.Integer, db.ForeignKey('states.id'), nullable=False)
-    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=False)
-    zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'), nullable=False)
-    title_id = db.Column(db.Integer, db.ForeignKey('health_title.id'), nullable=False)
-
-    state = db.relationship("State", back_populates="health_providers")
-    city = db.relationship("City", back_populates="health_providers")
-    zip_code = db.relationship("Zip_Code", back_populates="health_providers")
-    title = db.relationship("Healthcare_Title", back_populates="health_provider")
-    reviews = db.relationship("Review", back_populates="health_provider")
-    services = db.relationship("Provider_Services", back_populates="health_provider")
-    specialties = db.relationship("Provider_Specialties", back_populates="health_provider")
-
-    user_provider = db.relationship("User_Provider", back_populates="health_provider")
+    user = db.relationship("User", back_populates="relationship_pref")
+    sexuality =  db.relationship("Sexuality", back_populates="relationship_pref")
 
 
 class User_Provider(db.Model):
@@ -161,8 +179,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.String(40), nullable=False, unique=True)
 
-    review_tags = db.relationship("Tag", back_populates="tag")
-
+    review_tags = db.relationship("Review_Tag", back_populates="tag")
 
 class Review(db.Model):
     __tablename__ = 'reviews'
@@ -189,15 +206,6 @@ class Review_Tag(db.Model):
     tag = db.relationship("Tag", back_populates="review_tags")
 
 
-class Specialties(db.Model):
-    __tablename__ = "specialties"
-
-    id = db.Column(db.Integer, primary_key=True)
-    specialty = db.Column(db.String(100), nullable=False)
-
-    provider_specialties = db.relationship("Provider_Specialties", back_populates="specialty")
-
-
 class Provider_Specialties(db.Model):
     __tablename__ = "provider_specialties"
 
@@ -209,16 +217,7 @@ class Provider_Specialties(db.Model):
     health_provider = db.relationship("Health_Provider", back_populates="")
 
 
-class Service(db.Model):
-    __tablename__ = "services"
-
-    id = db.Column(db.Integer, primary_key=True)
-    service = db.Column(db.String(100), nullable=False)
-
-    provider_services = db.relationship("Provider_Services", back_populates="services")
-
-
-class Provider_Servicess(db.Model):
+class Provider_Services(db.Model):
     __tablename__ = "provider_services"
 
     id = db.Column(db.Integer, primary_key=True)
