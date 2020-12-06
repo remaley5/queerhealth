@@ -52,7 +52,6 @@ class User(db.Model, UserMixin):
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
     city_id = db.Column(db.Integer, db.ForeignKey('cities.id'))
     zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'))
-    relationship_preference_id = db.Column(db.Integer, db.ForeignKey('relationship_preference.id'))
     sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'))
@@ -132,6 +131,7 @@ class Health_Provider(db.Model):
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'), nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=False)
     zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'), nullable=False)
+    title_id = db.Column(db.Integer, db.ForeignKey('health_title.id'), nullable=False)
 
     state = db.relationship("State", back_populates="health_providers")
     city = db.relationship("City", back_populates="health_providers")
