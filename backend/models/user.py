@@ -4,6 +4,43 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
+class Gender(db.Model):
+    __tablename__ = 'gender'
+
+    id = db.Column(db.Integer, primary_key=True)
+    gender = db.Column(db.String(20), nullable=False)
+
+    user = db.relationship("User", back_populates="gender")
+
+class Race(db.Model):
+    __tablename__ = 'race'
+
+    id = db.Column(db.Integer, primary_key=True)
+    race = db.Column(db.String(20), nullable=False)
+
+    user = db.relationship("User", back_populates="race")
+
+
+class Sexuality(db.Model):
+    __tablename__ = 'sexuality'
+
+    id = db.Column(db.Integer, primary_key=True)
+    sexuality = db.Column(db.String(20), nullable=False)
+
+    relationship_preference = db.relationship("Relationship_Preference", back_populates="sexuality")
+    user = db.relationship("User", back_populates="sexuality")
+
+
+class Realtionship_Preference(db.Model):
+    __tablename__ = 'relationship_preference'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
+
+    user = db.relationship("User", back_populates="relationship_preference")
+    sexuality =  db.relationship("Sexuality", back_populates="relationship_preference")
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -12,8 +49,23 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(40), nullable=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     password_digest = db.Column(db.String(255), nullable=False)
+    state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
+    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'))
+    zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'))
+    relationship_preference_id = db.Column(db.Integer, db.ForeignKey('relationship_preference.id'))
+    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
+    race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
+    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'))
 
+    relationship_preference = db.relationship("Relationship_Preference", back_populates="user")
+    sexuality = db.relationship("Sexuality", back_populates="user")
+    race = db.relationship("Race", back_populates="user")
+    gender = db.relationship("Gender", back_populates="user")
     user_provider = db.relationship("User_Provider", back_populates="user")
+    state = db.relationship("State", back_populates="user")
+    city = db.relationship("City", back_populates="user")
+    zip_code = db.relationship("Zip_Code", back_populates="user")
+
 
     @property
     def password(self):
@@ -47,6 +99,7 @@ class State(db.Model):
     state = db.Column(db.String(30), nullable=False, unique=True)
 
     health_provider = db.relationship("Health_Provider", back_populates="state")
+    user = db.relationship("User", back_populates="state")
 
 
 class City(db.Model):
@@ -56,6 +109,7 @@ class City(db.Model):
     state = db.Column(db.String(40), nullable=False, unique=True)
 
     health_provider = db.relationship("Health_Provider", back_populates="city")
+    user = db.relationship("User", back_populates="city")
 
 
 class Zip_Code(db.Model):
@@ -65,6 +119,8 @@ class Zip_Code(db.Model):
     state = db.Column(db.Integer, nullable=False, unique=True)
 
     health_provider = db.relationship("Health_Provider", back_populates="zip_code")
+    user = db.relationship("User", back_populates="zip_code")
+
 
 class Health_Provider(db.Model):
     __tablename__ = 'health_providers'
