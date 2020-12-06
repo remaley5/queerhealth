@@ -150,6 +150,17 @@ class User(db.Model, UserMixin):
             return False, user
         return check_password_hash(user.password_digest, password), user
 
+    def safe_user(self):
+        user = {
+            'ids':self.id,
+            'state':self.state.state,
+            'city':self.city.city,
+            'zip':self.zip_code.zip_code,
+            'gender':self.gender.gender,
+            'race':self.race.race,
+            'sexuality':self.sexuality.sexuality,
+        }
+        return user
 
 class Realtionship_Preference(db.Model):
     __tablename__ = 'relationship_preferences'
