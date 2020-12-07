@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from backend.models import User, db
+from backend.models.user import User, db, Review
 from flask_login import current_user, login_required, login_user
 from sqlalchemy.orm import joinedload
 
@@ -14,3 +14,12 @@ def createUser():
     db.session.commit()
     login_user(user)
     return {"current_user_id": current_user.id}
+
+
+@user_routes.route('/test', methods=["GET"])
+def test():
+    info = db.session.query(User).first()
+    tester = info.safe_user()
+    t2 = db.session.query(Review).first()
+    print(t2.review_tags)
+    return {'t1':tester, 't2':2}
