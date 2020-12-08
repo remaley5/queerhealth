@@ -1,6 +1,6 @@
 from backend.models.user import (User, Gender, Race, Sexuality,
                             Healthcare_Title, State, City, Zip_Code, Health_Provider,
-                             Tag, Review, Review_Tag, Specialties, Provider_Specialties, Service, Provider_Services)
+                             Tag, Review, Review_Tag, Specialty, Service)
 from backend import app, db
 from dotenv import load_dotenv
 
@@ -10,119 +10,29 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    users = [
-        User(username='demo',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='mrlockin',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='pansy_king',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='fruity_honey',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='dorothy',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='nb_bb',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             ),
-         User(username='demo',
-             email='demo@aa.io',
-             password='password',
-             state_id=1,
-             city_id=2,
-             zip_code_id=1,
-             sexuality_id=2,
-             race_id=1,
-             gender_id=4
-             )
+    states = [
+        "New York",
+        "Oregon",
+        "Massachusetts",
+        "Rhode Island",
+        "California",
     ]
 
-    locations = [
-        State(state="New York"),
-        State(state="Oregon"),
-        State(state="Massachusetts"),
-        State(state="Rhode Island"),
-        State(state="California"),
-        City(city="Seattle"),
-        City(city="New York"),
-        City(city="Boston"),
-        City(city="Providence"),
-        City(city="Portland"),
-        City(city="San Francisco"),
-        City(city="Palo Alto"),
-        Zip_Code(zip_code=10005),
-        Zip_Code(zip_code=97212)
+    cities = [
+        "Seattle",
+        "New York",
+        "Boston",
+        "Providence",
+        "Portland",
+        "San Francisco",
+        "Palo Alto",
     ]
 
-    sexualities = [
-        "Asexual",
-        "Androsexual",
-        "Aromantic",
-        "Bicurious",
-        "Bisexual",
-        "Biromantic",
-        "Demisexual",
-        "Demiromantic",
-        "Fluid",
-        "Gay",
-        "Gynesexual",
-        "Heterosexual",
-        "Homosexual",
-        "Lesbian",
-        "LGBTQIA+",
-        "Pansexual",
-        "Omnisexual",
-        "Panromantic",
-        "Polysexual",
-        "Queer",
-        "Straight"
+    zip_codes = [
+        10005,
+        97212
     ]
+
 
     genders = [
         "AFAB",
@@ -160,7 +70,141 @@ with app.app_context():
         "Native American"
     ]
 
-    hc_title = [
+    sexualities = [
+        "Asexual",
+        "Androsexual",
+        "Aromantic",
+        "Bicurious",
+        "Bisexual",
+        "Biromantic",
+        "Demisexual",
+        "Demiromantic",
+        "Fluid",
+        "Gay",
+        "Gynesexual",
+        "Heterosexual",
+        "Homosexual",
+        "Lesbian",
+        "LGBTQIA+",
+        "Pansexual",
+        "Omnisexual",
+        "Panromantic",
+        "Polysexual",
+        "Queer",
+        "Straight"
+    ]
+
+    specialties = [
+        "Eating disorders",
+        "Nutrition",
+        "Endocrinology",
+        "Plastic surgery",
+        "Dermatology",
+        "Otolaryngology",
+        "Cognitive Behavioral Therapy",
+        "Phlebotomy",
+        "Gastroenterology",
+        "Cardiology",
+        "Primary Care",
+        "Physical Therapy",
+        "Radiology",
+        "Pediatrics",
+        "Ophthalmology",
+        "Optometry",
+        "Neurosurgery",
+        "Neurology",
+        "Talk therapy",
+        "Orthopedics",
+        "Obstetrics and Gynecology",
+        "Psychiatry",
+        "Oncology",
+        "Anesthesiology",
+        "Orthodontics",
+        "Dentistry",
+        "Urology",
+        "General Surgery",
+        "Vascular surgery",
+        "Nephrology",
+        "Pulmonology",
+        "Geriatrics",
+        "Rheumatology",
+        "Sports Medicine",
+        "Hematology",
+        "Infectious Disease",
+        "Occupational Therapy",
+        "Addiction psychology",
+        "Allergy and immunology",
+        "Adolescent medicine",
+        "Gender care",
+        "Child and adolescent psychology",
+        "Craneofacial surgery",
+        "Emergency Medicine",
+        "Dialectical behavior therapy",
+        "Trauma therapy",
+        "Family planning",
+        "Hospice",
+        "Internal medicine",
+        "Toxicology",
+        "Osteopathic medicine",
+        "Neonatal-perinatal medicine",
+        "Preventative medicine",
+        "Pulmonary disease",
+        "Thoracic surgery",
+        "Medical genetics",
+        "Light therapy",
+        "Aversion therapy",
+        "Applied behavior analysis",
+        "Individual therapy",
+        "Group therapy",
+        "Family therapy",
+        "Art therapy",
+        "Bibliotherapy",
+        "Biofeedback",
+        "Exposure and response prevention",
+        "Marriage counseling",
+        "Motivational interviewing",
+        "Music therapy",
+        "Neurofeedback",
+        "Play therapy",
+        "Person centered therapy",
+    ]
+
+    services = [
+        "Vaginoplasty",
+        "Phalloplasty",
+        "Scrotoplasty",
+        "Metioplasty",
+        "Chest surgery",
+        "Mastectomy",
+        "Facial Feminization",
+        "Reduction thyrochondroplasty",
+        "Augmentation mammoplasty",
+        "Hysterectomy",
+        "Oophorectomy",
+        "Orchiectomy",
+        "Vaginectomy",
+        "Facial Hair Removal",
+        "Voice Modification",
+        "Tucking",
+        "Packing",
+        "Binding",
+        "STD testing",
+        "Hormone Replacement Therapy (HRT)",
+        "Therapy",
+        "Physical Therapy",
+        "Mental Health",
+        "CBT",
+        "Family Therapy",
+        "Couples Therapy",
+        "Exposure Therapy",
+        "Interpersonal Therapy",
+        "ABA",
+        "Psychotherapy",
+        "Trauma work"
+    ]
+
+
+    hc_titles = [
         "Doctor",
         "Social Worker",
         "Clinical Coordinator",
@@ -262,7 +306,6 @@ with app.app_context():
         "Massage Therapist",
         "Ocupational Therapist",
         "Nutritionist",
-
     ]
 
     hc_provs = [
@@ -350,6 +393,7 @@ with app.app_context():
             title_id=1,
             ),
         Health_Provider(
+            first_name='',
             last_name="Baker",
             state_id=4,
             city_id=4,
@@ -369,27 +413,185 @@ with app.app_context():
             city_id=7,
             title_id=1,
             ),
+    ]
 
+    users = [
+        User(username='demo',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='mrlockin',
+             email='mrlockin@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='pansy_king',
+             email='pansy_king@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='fruity_honey',
+             email='fruity_honey@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='dorothy',
+             email='dorothy@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='nb_bb',
+             email='nb_bb@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1,
+             ),
+         User(username='blukitten',
+             email='blukitten@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             race_id=1
+             )
     ]
 
     tags = [
-        Tag(
-            word="Compassionate"
-        ),
-        Tag(
-            word="Timely"
-        ),
-        Tag(
-            word="Arrogant"
-        )
+        "Compassionate",
+        "Timely",
+        "Considerate",
+        "Inclusive",
+        "Competent",
+        "Trans",
+        "Knowledgable",
+        "Extra time",
+        "Bedside Manner"
+        "Racist",
+        "Misgendered",
+        "Transphobic",
+        "Fatphobic",
+        "Homophobic",
+        "Ableist",
+        "Correct pronouns",
+        "Non-monogamy",
     ]
 
     reviews = [
         Review(
             health_provider_id=1,
             good="Compassionate and great bedside manner",
-            bad="At times is arrogant",
+            bad="kind of awkward",
+            user_id=1,
             rating=8
+        ),
+        Review(
+            health_provider_id=1,
+            good='Mandy does amazing work for and with trans youth. I have taken all of the kids from the group home I work for to see her when possible. She is competent and always available for emergency help. Could not love her more.',
+            bad='Nothing, she is perfect.',
+            user_id=2,
+            rating=10
+        ),
+        Review(
+            health_provider_id=2,
+            good="She is wonderful. She works with adolecents at BMC's CATCH program",
+            bad='BMC is super busy.',
+            user_id=3,
+            rating=7
+        ),
+        Review(
+            health_provider_id=2,
+            good="incredibly thorough, gives teenagers agency in their own care and ensures access to expansive services outside of just medical care.",
+            bad='BMC is in the middle of an area with intravenous drug use which has made some of the youth I bring there uncomfortable.',
+            user_id=4,
+            rating=9
+        ),
+        Review(
+            health_provider_id=2,
+            good="Her understanding of gender is highly trans competent",
+            bad='Bathrooms are dirty and the ones that are accessible are strictly gendered.',
+            user_id=5,
+            rating=8
+        ),
+        Review(
+            health_provider_id=3,
+            good="She has an advanced understanding of gender and she advocated fiercly for youth.",
+            bad='She reads as kind of cold and can be blunt.',
+            user_id=5,
+            rating=8
+        ),
+        Review(
+            health_provider_id=3,
+            good="She is wonderful but some people don't like interacting with her because she can be kind of scary. She makes sure her clients have a voice in their care and medication.",
+            bad='Nothing bad.',
+            user_id=6,
+            rating=9
+        ),
+        Review(
+            health_provider_id=4,
+            good="He's fine, the only interactions I've had with him were with a tricky kid who wanted to be on aderall. He responded pretty well to her being aggressive.",
+            bad='He definitely has some learning to do around gender',
+            user_id=7,
+            rating=6
+        ),
+        Review(
+            health_provider_id=5,
+            good="I haven't been to him directly but I have not heard good things.",
+            bad='Transphobic',
+            user_id=1,
+            rating=1
+        ),
+        Review(
+            health_provider_id=6,
+            good="Overall he is fine.",
+            bad="Dr Vetters has been working in the field for a long time and is clearly burnt out. He doesn't give the kind of special care that one would hope for out of a doctor",
+            user_id=2,
+            rating=6
+        ),
+        Review(
+            health_provider_id=7,
+            good="He was my plastic surgeon for top surgery and he gave so many options and made sure my chest would look exactly how I wanted it to. I LOVED him.",
+            bad="His office isn't very well resourced.",
+            user_id=3,
+            rating=10
+        ),
+        Review(
+            health_provider_id=8,
+            good="I've heard good things about her being the best Hormone Replacement person in Rhode Island.",
+            bad="Haven't actually been to her but heard no bad things.",
+            user_id=4,
+            rating=9
+        ),
+        Review(
+            health_provider_id=9,
+            good="He did a good job on my top surgery.",
+            bad="He is not trans competent at all. He misgendered me and during our pre-op appointments said a number of comments that triggered my dysphoria.",
+            user_id=5,
+            rating=1
+        ),
+        Review(
+            health_provider_id=9,
+            good="idk",
+            bad="He was my partner's surgeon for a double mastectomy. They were misgendered every step of the way from the nurses to the front desk people to the anesthesiologist, even when I had gone ahead to make sure everyone knew their pronouns. He does the most top surgeries in Rhode Island I'm pretty sure and he misgendered my partner throughout! I cannot. It was horrible but the surgery went fine.",
+            user_id=5,
+            rating=1
         )
     ]
 
@@ -400,109 +602,67 @@ with app.app_context():
             tag_id=1
         ),
         Review_Tag(
-            quality=False,
+            quality=True,
             review_id=1,
-            tag_id=3
-        )
+            tag_id=8
+        ),
+        Review_Tag(
+            quality=True,
+            review_id=2,
+            tag_id=6
+        ),
+        Review_Tag(
+            quality=True,
+            review_id=3,
+            tag_id=5
+        ),
+        Review_Tag(
+            quality=False,
+            review_id=3,
+            tag_id=6
+        ),
     ]
 
-    specialties = [
-        Specialties(
-            "Eating Disorders",
-            "Endochronology",
-            "Plastic Surgery"
-        )
-    ]
+    for state in states:
+        db.session.add(State(state=state))
 
-    services = [
-        "Vaginoplasty",
-        "Phalloplasty",
-        "Scrotoplasty",
-        "Metioplasty",
-        "Chest surgery",
-        "Mastectomy",
-        "Facial Feminization",
-        "Reduction thyrochondroplasty",
-        "Augmentation mammoplasty",
-        "Hysterectomy",
-        "Oophorectomy",
-        "Orchiectomy",
-        "Vaginectomy",
-        "Facial Hair Removal",
-        "Voice Modification",
-        "Tucking",
-        "Packing",
-        "Binding",
-        "STD testing",
-        "Hormone Replacement Therapy (HRT)",
-        "Therapy",
-        "Physical Therapy",
-        "Mental Health",
-        "CBT",
-        "Family Therapy",
-        "Couples Therapy",
-        "Exposure Therapy",
-        "Interpersonal Therapy",
-        "ABA",
-        "Psychotherapy",
-        "Trauma work"
-    ]
+    for city in cities:
+        db.session.add(City(city=city))
 
-    provider_specialties = [
-        Provider_Services(
-            service_id=1,
-            provider_id=1
-        )
-    ]
-
-    provider_services = [
-        Provider_Specialties(
-            specialty_id=1,
-            provider_id=1
-        )
-    ]
-
-    for location in locations:
-        db.session.add(location)
-
-    for identity in sexualities:
-        db.session.add(Sexuality(sexuality=identity))
+    for zc in zip_codes:
+        db.session.add(Zip_Code(zip_code=zc))
 
     for gender in genders:
         db.session.add(Gender(gender=gender))
 
-    for title in hc_title:
-         db.session.add(Healthcare_Title(title=title))
+    for race in races:
+        db.session.add(Race(race=race))
 
-    for spec in specialties:
-        db.session.add(Specialties(specialty=spec))
+    for sexuality in sexualities:
+        db.session.add(Sexuality(sexuality=sexuality))
 
-    for tag in tags:
-        db.session.add(tag)
+    for specialty in specialties:
+        db.session.add(Specialty(specialty=specialty))
 
     for service in services:
         db.session.add(Service(service=service))
 
-    for race in races:
-        db.session.add(Race(race=race))
+    for title in hc_titles:
+        db.session.add(Healthcare_Title(title=title))
+
+    for hc_prov in hc_provs:
+        db.session.add(hc_prov)
 
     for user in users:
         db.session.add(user)
+
+    for tag in tags:
+        db.session.add(Tag(word=tag))
 
     for review in reviews:
         db.session.add(review)
 
     for tag in review_tags:
         db.session.add(tag)
-
-    for hc_prov in hc_provs:
-        db.session.add(hc_prov)
-
-    for prov_special in provider_specialties:
-        db.session.add(prov_special)
-
-    for prov_service in provider_services:
-        db.session.add(prov_service)
-
 
     db.session.commit()
