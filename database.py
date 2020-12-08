@@ -1,6 +1,6 @@
-from backend.models.user import (User, Gender, Race, Sexuality, Realtionship_Preference,
+from backend.models.user import (User, Gender, Race, Sexuality,
                             Healthcare_Title, State, City, Zip_Code, Health_Provider,
-                            User_Provider, Tag, Review, Review_Tag, Specialties, Provider_Specialties, Service, Provider_Services)
+                             Tag, Review, Review_Tag, Specialties, Provider_Specialties, Service, Provider_Services)
 from backend import app, db
 from dotenv import load_dotenv
 
@@ -11,8 +11,67 @@ with app.app_context():
     db.create_all()
 
     users = [
-        User(first_name='demo',
-             last_name='demo',
+        User(username='demo',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='mrlockin',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='pansy_king',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='fruity_honey',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='dorothy',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='nb_bb',
+             email='demo@aa.io',
+             password='password',
+             state_id=1,
+             city_id=2,
+             zip_code_id=1,
+             sexuality_id=2,
+             race_id=1,
+             gender_id=4
+             ),
+         User(username='demo',
              email='demo@aa.io',
              password='password',
              state_id=1,
@@ -27,51 +86,290 @@ with app.app_context():
     locations = [
         State(state="New York"),
         State(state="Oregon"),
+        State(state="Massachusetts"),
+        State(state="Rhode Island"),
+        State(state="California"),
         City(city="Seattle"),
         City(city="New York"),
-        Zip_Code(zip_code=10005)
+        City(city="Boston"),
+        City(city="Providence"),
+        City(city="Portland"),
+        City(city="San Francisco"),
+        City(city="Palo Alto"),
+        Zip_Code(zip_code=10005),
+        Zip_Code(zip_code=97212)
     ]
 
     sexualities = [
-        Sexuality(sexuality="Asexual"),
-        Sexuality(sexuality="Bicurious"),
-        Sexuality(sexuality="Bisexual"),
+        "Asexual",
+        "Androsexual",
+        "Aromantic",
+        "Bicurious",
+        "Bisexual",
+        "Biromantic",
+        "Demisexual",
+        "Demiromantic",
+        "Fluid",
+        "Gay",
+        "Gynesexual",
+        "Heterosexual",
+        "Homosexual",
+        "Lesbian",
+        "LGBTQIA+",
+        "Pansexual",
+        "Omnisexual",
+        "Panromantic",
+        "Polysexual",
+        "Queer",
+        "Straight"
     ]
 
     genders = [
-        Gender(gender="Cisgender"),
-        Gender(gender="Non-Binary"),
-        Gender(gender="Transgender"),
-        Gender(gender="Gender Fluid"),
+        "AFAB",
+        "Agender",
+        "AMAB",
+        "Androgyne",
+        "Aporagender",
+        "Bigender",
+        "Cisgender",
+        "Demigender",
+        "Femme",
+        "FTM",
+        "GNC",
+        "Genderfluid",
+        "Genderqueer",
+        "Intergender",
+        "Intersex",
+        "MTF",
+        "Non-Binary",
+        "Pangender",
+        "Polygender",
+        "Transfeminine",
+        "Transgender",
+        "Transmasculine",
+        "Two-spirit",
     ]
 
     races = [
-        Race(race="White"),
-        Race(race="African American"),
-        Race(race="Asian"),
+        "White",
+        "Asian",
+        "African American",
+        "Black",
+        "Latino",
+        "Hispanic",
+        "Native American"
     ]
 
     hc_title = [
-        Healthcare_Title(title="Doctor"),
-        Healthcare_Title(title="Nurse"),
+        "Doctor",
+        "Social Worker",
+        "Clinical Coordinator",
+        "Consultant",
+        "Director of Nursing",
+        "Medical Receptionist",
+        "Social Services",
+        "Audiologist",
+        "Anesthesiologist",
+        "Be"
+        "Ambulatory Nurse",
+        "Anesthesiologist",
+        "Audiologist",
+        "Behavioral Health Charge Nurse",
+        "Bereavement Counselor",
+        "Cardiac Catheterization Lab Nurse",
+        "Cardiovascular Operating Room Nurse",
+        "Cardiovascular Technologist",
+        "Charge Nurse",
+        "Chiropractor",
+        "Counselor",
+        "Dentist",
+        "Dermatology Nurse",
+        "Dialysis Nurse",
+        "Doctor",
+        "Emergency Room Nurse",
+        "Endoscopy Nurse",
+        "Family Nurse Practitioner",
+        "Flight Nurse",
+        "Genetic Counselor",
+        "Home Health Nurse",
+        "Hospice Counselor",
+        "Hospice Nurse",
+        "House Supervisor Nurse",
+        "Intensive Care Nurse",
+        "Interventional Radiology Nurse",
+        "Labor and Delivery Nurse",
+        "Lead Registered Nurse",
+        "Legal Nurse Consultant",
+        "Licensed Practical Nurse",
+        "Licensed Vocational Nurse",
+        "Medical Surgery Nurse",
+        "Microbiologist",
+        "Neonatal Intensive Care Nurse",
+        "Nurse",
+        "Nurse Anesthetist",
+        "Nurse Midwife",
+        "Nurse Practitioner",
+        "Occupational Health Nurse",
+        "Occupational Health and Safety Specialist",
+        "Occupational Therapist",
+        "Oncology Nurse",
+        "Operating Room Nurse",
+        "Optician",
+        "Optometrist",
+        "Orthodontist",
+        "Paramedic",
+        "Pediatrician",
+        "Pediatric Endocrinology Nurse",
+        "Pediatric Intensive Care Nurse",
+        "Pediatric Nurse",
+        "Pediatric Nurse Practitioner",
+        "Perioperative Nurse",
+        "Pharmacist",
+        "Prosthetist",
+        "Physician",
+        "Podiatrist",
+        "Post Anesthesia Nurse",
+        "Postpartum Nurse",
+        "Progressive Care Nurse",
+        "Psychiatric Nurse",
+        "Psychiatric Nurse Practitioner",
+        "Plastic Surgeon",
+        "Public Health Nurse",
+        "Registered Nurse",
+        "Registered Nurse (RN) Case Manager",
+        "Registered Nurse(RN) Data Coordinator",
+        "Registered Nurse (RN) First Assistant",
+        "Registered Nurse (RN) Geriatric Care",
+        "Registered Nurse (RN) Medical Inpatient Services",
+        "Registered Nurse (RN) Patient Call Center",
+        "Registered Nurse (RN) Student Health Services",
+        "Registered Nurse (RN) Telephone Triage",
+        "Registered Nurse (RN) Urgent Care",
+        "Registered Nurse (RN) Women's Services",
+        "Restorative Nurse",
+        "Registered Medical Assistant",
+        "Respiration (Inhalation) Therapist",
+        "School Nurse",
+        "Speech-Language Pathologist",
+        "Surgeon",
+        "Telemetry Nurse",
+        "Therapist",
+        "Veterinarian",
+        "Veterinary Assistant",
+        "Veterinary Technologist",
+        "Wellness Nurse",
+        "Hospice Aide",
+        "Massage Therapist",
+        "Ocupational Therapist",
+        "Nutritionist",
+
     ]
 
     hc_provs = [
         Health_Provider(
+            first_name="Mandy",
+            last_name="Coles",
+            state_id=3,
+            city_id=3,
             title_id=1,
-            first_name="Bob",
-            last_name="Dylan",
-            state_id=1,
-            city_id=2,
-            zip_code_id=1
-        )
-    ]
+            ),
+        Health_Provider(
+            first_name="Erin",
+            last_name="Peterson",
+            state_id=3,
+            city_id=3,
+            title_id=2,
+            ),
+        Health_Provider(
+            first_name="Natalia",
+            last_name="Bogdanovic",
+            state_id=3,
+            city_id=3,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Andrew",
+            last_name="Clark",
+            state_id=3,
+            city_id=3,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Robert",
+            last_name="Oats",
+            state_id=3,
+            city_id=3,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Ralph",
+            last_name="Vetters",
+            state_id=3,
+            city_id=3,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Pranay",
+            last_name="Parikh",
+            state_id=3,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Michelle",
+            last_name="Forcier",
+            state_id=4,
+            city_id=4,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Daniel",
+            last_name="Kwan",
+            state_id=4,
+            city_id=4,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Jason",
+            last_name="Rafferty",
+            state_id=4,
+            city_id=4,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Jill",
+            last_name="Wagner",
+            state_id=4,
+            city_id=4,
+            title_id=2,
+            ),
+        Health_Provider(
+            first_name="Beth",
+            last_name="Cronin",
+            state_id=4,
+            city_id=4,
+            title_id=1,
+            ),
+        Health_Provider(
+            last_name="Baker",
+            state_id=4,
+            city_id=4,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Walter",
+            last_name="Lin",
+            state_id=5,
+            city_id=6,
+            title_id=1,
+            ),
+        Health_Provider(
+            first_name="Matt",
+            last_name="Stevenson",
+            state_id=5,
+            city_id=7,
+            title_id=1,
+            ),
 
-    rel_prefs = [
-        Realtionship_Preference(
-            user_id=1,
-            sexuality_id=2
-        )
     ]
 
     tags = [
@@ -110,14 +408,44 @@ with app.app_context():
 
     specialties = [
         Specialties(
-            specialty="Eating Disorders"
+            "Eating Disorders",
+            "Endochronology",
+            "Plastic Surgery"
         )
     ]
 
     services = [
-        Service(
-            service="Mental Health"
-        )
+        "Vaginoplasty",
+        "Phalloplasty",
+        "Scrotoplasty",
+        "Metioplasty",
+        "Chest surgery",
+        "Mastectomy",
+        "Facial Feminization",
+        "Reduction thyrochondroplasty",
+        "Augmentation mammoplasty",
+        "Hysterectomy",
+        "Oophorectomy",
+        "Orchiectomy",
+        "Vaginectomy",
+        "Facial Hair Removal",
+        "Voice Modification",
+        "Tucking",
+        "Packing",
+        "Binding",
+        "STD testing",
+        "Hormone Replacement Therapy (HRT)",
+        "Therapy",
+        "Physical Therapy",
+        "Mental Health",
+        "CBT",
+        "Family Therapy",
+        "Couples Therapy",
+        "Exposure Therapy",
+        "Interpersonal Therapy",
+        "ABA",
+        "Psychotherapy",
+        "Trauma work"
     ]
 
     provider_specialties = [
@@ -134,41 +462,32 @@ with app.app_context():
         )
     ]
 
-    user_providers = [
-        User_Provider(
-            user_id=1,
-            health_provider_id=1
-        )
-    ]
     for location in locations:
         db.session.add(location)
 
-    for sexuality in sexualities:
-        db.session.add(sexuality)
+    for identity in sexualities:
+        db.session.add(Sexuality(sexuality=identity))
 
     for gender in genders:
-        db.session.add(gender)
+        db.session.add(Gender(gender=gender))
 
     for title in hc_title:
-         db.session.add(title)
+         db.session.add(Healthcare_Title(title=title))
 
     for spec in specialties:
-        db.session.add(spec)
+        db.session.add(Specialties(specialty=spec))
 
     for tag in tags:
         db.session.add(tag)
 
     for service in services:
-        db.session.add(service)
+        db.session.add(Service(service=service))
 
     for race in races:
-        db.session.add(race)
+        db.session.add(Race(race=race))
 
     for user in users:
         db.session.add(user)
-
-    for rel_pref in rel_prefs:
-        db.session.add(rel_pref)
 
     for review in reviews:
         db.session.add(review)
@@ -184,9 +503,6 @@ with app.app_context():
 
     for prov_service in provider_services:
         db.session.add(prov_service)
-
-    for up in user_providers:
-        db.session.add(up)
 
 
     db.session.commit()

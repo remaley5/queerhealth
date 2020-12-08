@@ -40,7 +40,7 @@ class Gender(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     gender = db.Column(db.String(20), nullable=False)
 
-    user = db.relationship("User", back_populates="gender")
+    users = db.relationship("User_Gender", back_populates="gender")
 
 
 class Race(db.Model):
@@ -58,8 +58,9 @@ class Sexuality(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sexuality = db.Column(db.String(20), nullable=False)
 
-    relationship_pref = db.relationship("Realtionship_Preference", back_populates="sexuality")
-    user = db.relationship("User", back_populates="sexuality")
+    """ relationship_pref not related to sexuality """
+
+    user = db.relationship("User_Sexuality", back_populates="sexuality")
 
 
 class Specialties(db.Model):
@@ -107,29 +108,30 @@ class Health_Provider(db.Model):
     services = db.relationship("Provider_Services", back_populates="health_provider")
     specialties = db.relationship("Provider_Specialties", back_populates="health_provider")
 
-    user_provider = db.relationship("User_Provider", back_populates="health_provider")
-
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(40), nullable=False)
-    last_name = db.Column(db.String(40), nullable=True)
+    username = db.Column(db.String(40), nullable=False)
+    """ took out first_name & last_name and added username """
     email = db.Column(db.String(255), nullable=False, unique=True)
     password_digest = db.Column(db.String(255), nullable=False)
     state_id = db.Column(db.Integer, db.ForeignKey('states.id'))
     city_id = db.Column(db.Integer, db.ForeignKey('cities.id'))
     zip_code_id = db.Column(db.Integer, db.ForeignKey('zip_codes.id'))
-    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'))
-    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'))
 
-    relationship_pref = db.relationship("Realtionship_Preference", back_populates="user", cascade="all, delete")
-    sexuality = db.relationship("Sexuality", back_populates="user", cascade="all, delete")
+    """ Took out sexuality_id and made user_preference into user_sexuality
+    so that one user can choose multiple sexualities
+    same for gender and gender_id """
+    sexuality = db.relationship("User_Sexuality", back_populates="user")
+    gender = db.relationship("User_Gender", back_populates="user")
+
     race = db.relationship("Race", back_populates="user", cascade="all, delete")
-    gender = db.relationship("Gender", back_populates="user", cascade="all, delete")
-    user_provider = db.relationship("User_Provider", back_populates="user", cascade="all, delete")
+
+    """ took out user_provider because that would be set up by who they review? """
+
     state = db.relationship("State", back_populates="user", cascade="all, delete")
     city = db.relationship("City", back_populates="user")
     zip_code = db.relationship("Zip_Code", back_populates="user")
@@ -158,31 +160,8 @@ class User(db.Model, UserMixin):
             'zip':self.zip_code.zip_code,
             'gender':self.gender.gender,
             'race':self.race.race,
-            'sexuality':self.sexuality.sexuality,
         }
         return user
-
-class Realtionship_Preference(db.Model):
-    __tablename__ = 'relationship_preferences'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexuality.id'))
-
-    user = db.relationship("User", back_populates="relationship_pref")
-    sexuality =  db.relationship("Sexuality", back_populates="relationship_pref")
-
-
-class User_Provider(db.Model):
-    __tablename__ = 'user_providers'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    health_provider_id = db.Column(db.Integer, db.ForeignKey('health_providers.id'), nullable=False)
-
-    health_provider = db.relationship("Health_Provider", back_populates="user_provider")
-    user = db.relationship("User", back_populates="user_provider")
-
 
 class Tag(db.Model):
     __tablename__ = 'tags'
@@ -237,3 +216,24 @@ class Provider_Services(db.Model):
 
     services = db.relationship("Service", back_populates="provider_services")
     health_provider = db.relationship("Health_Provider", back_populates="services")
+
+
+class User_Sexuality (db.Model):
+    __tablename__ = 'user_sexuality'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sexuality_id = db.Column(db.Integer, db.ForeignKey('sexualities.id'))
+
+    user = db.relationship("User", back_populates="user_sexuality")
+    sexuality =  db.relationship("Sexuality", back_populates="user_sexuality")
+
+class User_Gender (db.Model):
+    __tablename__ = 'user_gender'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    gender_id = db.Column(db.Integer, db.ForeignKey('genders.id'))
+
+    user = db.relationship("User", back_populates="user_gender")
+    gender =  db.relationship("Gender", back_populates="user_gender")
