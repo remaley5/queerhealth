@@ -133,7 +133,7 @@ class User(db.Model, UserMixin):
     state = db.relationship("State", back_populates="user", cascade="all, delete")
     city = db.relationship("City", back_populates="user")
     zip_code = db.relationship("Zip_Code", back_populates="user")
-
+    review = db.relationship("Review", back_populates="user")
 
     @property
     def password(self):
@@ -200,7 +200,9 @@ class Review(db.Model):
     good = db.Column(db.Text)
     bad = db.Column(db.Text)
     rating = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    user = db.relationship("User", back_populates="review")
     review_tags = db.relationship("Review_Tag", back_populates="review")
     health_provider = db.relationship("Health_Provider", back_populates="reviews")
 
